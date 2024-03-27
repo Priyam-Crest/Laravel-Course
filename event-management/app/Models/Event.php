@@ -11,12 +11,22 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'user_id',
+        'start_time',
+        'end_time'
+    ];
+
+    // protected $guarded = [];
+
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function attendee() : HasMany
+    public function attendees() : HasMany
     {
         return $this->hasMany(Attendee::class);
     }
