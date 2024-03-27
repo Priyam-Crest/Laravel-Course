@@ -18,6 +18,9 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum')->except(['index', 'show']);
+        $this->middleware('throttle:api')
+            ->only(['store','update','destroy']);
+        $this->authorizeResource(Event::class, 'event');
     }
 
     /**
@@ -69,7 +72,7 @@ class EventController extends Controller
         // {
         //     abort(403,'You are not authorized to update this event.');
         // }
-        $this->authorize('update-event', $event);
+        // $this->authorize('update-event', $event);
         $event->update(
             $request->validate([
                 'name' => 'sometimes|string|max:255',
